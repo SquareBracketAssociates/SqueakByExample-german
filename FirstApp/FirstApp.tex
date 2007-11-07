@@ -6,6 +6,7 @@
 % --------------------------------------------
 % Lulu:
 	\documentclass[a4paper,10pt,twoside]{book}
+	\usepackage{times,german,tabularx}
 	\usepackage[
 		papersize={6in,9in},
 		hmargin={.75in,.75in},
@@ -27,21 +28,19 @@
 	\sloppy
 \fi
 %=================================================================
-\chapter{A first application}
+\chapter{Eine erste Anwendung}
 \label{cha:firstApp}
 
-In this chapter, we will develop a simple game: \ind{Quinto}. 
-Along the way we will demonstrate most of the tools that \squeak programmers use to construct and debug their programs, and show how programs are exchanged with other developers. We will see the system browser, the object inspector, the debugger and the \ind{Monticello} \ind{package} browser. 
-Development in Smalltalk is efficient: you will find that you spend far more time actually writing code and far less managing the development process. 
-This is partly because the Smalltalk language is very simple, and partly because the tools that make up the programming environment are very well integrated with the language.
+In diesem Kapitel werden wir ein einfaches Spiel entwickeln: \ind{Quinto}. Dabei werden wir die meisten Werkzeuge zeigen, die \squeak Squeak-Entwickler verwenden, um ihre Programme zu konstruieren und zu debuggen und zeigen, wie Programme zwischen Entwicklern ausgetauscht werden können. Wir werden den System-Browser, den Objekt-Inspektor, den Debugger und den  \ind{Monticello} \ind{package} Browser sehen. Entwicklung in Smalltalk ist effizient: du wirst feststellen, dass du viel mehr Zeit damit verbringst, wirklichen Quelltext zu schreiben und viel weniger Zeit damit, den Entwicklungsprozess zu verwalten. Das liegt zum Teil daran, dass die Sprache Smalltalk sehr einfach ist und zum Teil daran, dass die Werkzeuge sehr gut in die Sprache integriert sind. 
+
 
 %=================================================================
-\section{The Quinto game}
+\section{Das Spiel Quinto}
 
 % DON'T USE WRAPFIGURE CLOSE TOO A PAGE BREAK!!! (ON)
 %\begin{wrapfigure}[13]{r}{0.35\linewidth}%
 %	\vskip -\baselineskip
-%	\centerline{\includegraphics[width=.8\linewidth]{GameBoard}}
+%	\centerline{\includegraphics[width=.8\linewidth]{Spielfeld}}
 %	\caption{The Quinto game board. The user has just clicked the mouse as shown by the cursor.
 %	\label{fig:gameBoard}}
 %\end{wrapfigure}
@@ -49,33 +48,31 @@ This is partly because the Smalltalk language is very simple, and partly because
 \begin{figure}[ht]
 	\vskip -\baselineskip
 	\centerline{\includegraphics[width=.3\linewidth]{GameBoard}}
-	\caption{The Quinto game board. The user has just clicked the mouse as shown by the cursor.
-	\label{fig:gameBoard}}
+	\caption{Das Quinto-Spielfeld. Der Spieler hat gerade mit der Maus geklickt, wie der Cursor anzeigt
+	\label{fig:Spielfeld}}
 \end{figure}
 
-To show you how to use \squeak's programming tools, we will build a simple game called \emph{Quinto}.  The game board is shown in \figref{gameBoard}; it consists of rectangular array of light yellow \emph{cells}.  When you click on one of the cells with the mouse, the four surrounding cells turn blue.  Click again, and they toggle back to light yellow.  The object of the game is to turn blue as many cells as possible.
+Um zu zeigen, wie man die Programmierwerkzeuge von \squeak verwendet, wollen wir ein einfaches Spiel namens \emph{Quinto} bauen. Das Spielfeld ist in \figref{Spielfeld} zu sehen, es besteht aus rechteckigen Feld hellgelber \emph{Zellen}. Wenn du auf eine dieser Zellen mit der Maus klickst, färben sich die angrenzenden Zellen blau. Wenn du nochmals klickst, wechseln sie zurück auf hellgelb. Das Ziel des Spiels ist es, so viele Zellen wie möglich blau zu färben.
+Das Quinto-Spiel aus \figref{Spielfeld} besteht aus zwei Arten von Objekten: das Spielfeld selbst und 100 einzelne Zell-Objekte. Der \squeak Quelltext für dieses Spiel wird zwei Klassen enthalten: eine für das Spiel und eine für die Klasse. Wir wollen nun zeigen, wie du diese Klassen mit den  \squeak Programmierwerkzeugen definieren kannst.
 
-The Quinto game shown in \figref{gameBoard} is made up of two kinds of objects: the game board itself, and 100 individual cell objects.  The \squeak code to implement the game will contain two classes: one for the game and one for the cells.
-We will now show you how to define these classes using the \squeak programming tools.
 
 %=================================================================
-\section{Creating a new class Category}
+\section{Eine neue Klassenkategorie erzeugen}
 
-We have already seen the \ind{system browser} in \charef{quick}, where we learned how to navigate to classes and methods, and saw how to define new methods.
-Now we will see how to create system categories and classes.
-\seeindex{system category}{category}
-\seeindex{class category}{system category}
-\index{category!creating}
+Den \ind{System Browser} haben wir schon in \charef{quick} gesehen, wo wir gelernt haben, zu Klassen und Methoden zu navigieren und wie man  neue Methoden definiert. Nun sehen wir, wir man System-Kategorien und Klassen erzeugt. 
 
-\dothis{Open a system browser and yellow-click in the category pane.
-Select \menu{add item \ldots}.}
+\seeindex{System Kategorie}{Kategorie}
+\seeindex{Klassenkategorie}{System Kategorie}
+\index{Kategorie!erzeugen}
+
+\dothis{Öffne einen System-Browser und klicke mit der gelben Maustaste in die Kategorie-Spalte. Wähle  \menu{add item \ldots}.}
 
 \begin{figure}[htb]
 \begin{minipage}[b]{0.48\textwidth}
 \ifluluelse
 	{\centerline {\includegraphics[width=0.9\textwidth]{AddCategory}}}
 	{\centerline {\includegraphics[scale=0.7]{AddCategory}}}
-	\caption{Adding a system category.
+	\caption{Eine System-Kategorie hinzufügen.
 	\label{fig:addCategory}}
 \end{minipage}
 \hfill
@@ -83,93 +80,90 @@ Select \menu{add item \ldots}.}
 \ifluluelse
 	{\centerline {\includegraphics[width=0.9\textwidth]{ClassTemplate}}}
 	{\centerline {\includegraphics[scale=0.7]{ClassTemplate}}}
-	\caption{The class-creation Template.
+	\caption{Das Template für die Klassenerzeugung.
 	\label{fig:classTemplate}}
 \end{minipage}
 \end{figure}
 
-Type the name of the new category (we will use \scat{SBE-Quinto}) in the dialog box and click \menu{accept} (or just press the return key); the new category is created, and positioned at the end of the category list.
-If you selected an existing category first, then the new category will be positioned immediately ahead of the selected one.
+Tippe den Namen der neuen Kategorie (wir verwenden \scat{SBE-Quinto}) in das Dialogfenster und klicke auf \menu{OK} (oder drücke einfach die ENTER-Taste); die neue Kategorie ist erzeugt und befindet sich am Ende der Kategorienliste. Hast du vorher schon eine existierende Kategorie ausgewählt, dann wird die neue Kategorie direkt davor angeordnet.
 
 %=================================================================
-\section{Defining the class SBECell}
+\section{Die Klasse SBEZelle definieren}
 
-As yet there are  of course no classes in the new category. However, the main editing pane displays a template to make it easy to create a new class (see \figref{classTemplate}).
+Jetzt sind natürlich noch keine Klassen in dieser Kategorie. Trotzdem zeigt das Haupt-Editor-Fenster bereits eine Vorlage, die es erleichtert, eine neue Klasse zu erzeugen (see \figref{classTemplate}). 
 
-This template shows us \st expression that sends a message to a class called \ct{Object}, asking it to create a subclass called \ct{NameOfSubClass}.  The new class has no variables, and should belong to the category \scat{SBE-Quinto}.
+Diese Vorlage zeigt einen \st Ausdruck, der eine Nachricht an eine Klasse namens \ct{Object} schickt und es auffordert, eine Unterklasse namens \ct{NameOfSubClass} zu erzeugen. Die neue Klasse hat keine Variablen und soll in die Kategorie \scat{SBE-Quinto} gehören. 
+Wir verändern einfach die Vorlage, um die Klasse zu erzeugen, die wir wirklich haben wollen. 
 
-We simply modify the template to create the class that we really want.
 
-\dothis{Modify the class creation template as follows:}
+\dothis{Verändere die Klassen-Vorlage wie folgt:}
 \begin{itemize}
-  \item Replace \clsind{Object} by \clsind{SimpleSwitchMorph}.
-  \item Replace \ct{NameOfSubClass} by \clsind{SBECell}.
-  \item Add \ct{mouseAction} to the list of instance variables.
+  \item Ersetze \clsind{Object} durch \clsind{SimpleSwitchMorph}.
+  \item Ersetze \ct{NameOfSubClass} durch \clsind{SBEZelle}.
+  \item Füge \ct{mausAktion} zur Liste der Instanzvariablen hinzu.
 \end{itemize}
-The result should look like \clsref{firstClassDef}.
 
-\begin{classdef}[firstClassDef]{Defining the class \ct| SBECell|}
-SimpleSwitchMorph subclass: #SBECell
-   instanceVariableNames: 'mouseAction'
+Das Ergebnis sollte aussehen wie \clsref{firstClassDef}.
+
+\begin{classdef}[firstClassDef]{Definition der Klasse \ct| SBEZelle|}
+SimpleSwitchMorph subclass: #SBEZelle
+   instanceVariableNames: 'mausAktion'
    classVariableNames: ''
    poolDictionaries: ''
    category: 'SBE-Quinto'
 \end{classdef}
-\index{system browser!defining a class}
-\index{class!creation}
+\index{System Browser!Definition einer Klasse}
+\index{Klasse!Erzeugung}
 \index{Morphic}
 
-This new definition consists of a \st expression that sends a message to the existing class \ct{SimpleSwitchMorph}, asking it to create a subclass called \ct{SBECell}.
-(Actually, since \ct{SBECell} does not exist yet, we passed as argument the \emphind{symbol} \ct{#SBECell} which stands for the name of the class to create.)
-We also tell it that instances of the new class should have a \ct{mouseAction} instance variable, which we will use to define what action the cell should take if the mouse should click over it.
+Diese neue Definition besteht aus einem \st Ausdruck, der eine Nachricht an die existierende Klasse \ct{SimpleSwitchMorph} schickt und es auffordert, eine Unterklasse namens \ct{SBEZelle} zu erzeugen (Genau genommen, da \ct{SBEZelle} jetzt noch nicht existiert, übergeben wir \emphind{symbol} \ct{#SBEZelle} als Argument, was für den Namen der Klasse steht, die erzeugt werden soll). Wir sagen auch, dass Instanzen der neuen klasse eine Instanzvariable namens \ct{mausAktion} haben sollen, welche wir nutzen wollen, um zu definieren, welche Aktion die Zelle ausführen soll, wenn mit der Maus darauf geklickt wird
 
-\emph{At this point you still have not created anything.}
-Note that the border of the class template pane has changed to red (\figref{acceptClassDef}).
-This means that there are \emph{unsaved changes}.
-To actually send this message, you must \menu{accept} it.
+\emph{An diesem Punkt hast du noch nichts erzeugt.}
+Beachte, dass der Rand des Editorfensters mit der Klassenvorlage rot gefärbt ist (\figref{acceptClassDef}). Das bedeutet, dass sich dort \emph{ungesicherte Änderungen} befinden. Um diese Nachricht wirklich zu senden, musst du sie \menu{accept}. 
 
 \begin{figure}[h!t]
 \ifluluelse
 	{\centerline {\includegraphics[width=\textwidth]{AcceptClassDef}}}
 	{\centerline {\includegraphics[scale=0.7]{AcceptClassDef}}}
-\caption{The class-creation Template.
+\caption{Die Vorlage zur Klassenerzeugung.
 \label{fig:acceptClassDef}}
 \end{figure}
 
-\dothis{Accept the new class definition.}
-Either yellow-click and select \menu{accept}, or use the shortcut \short{s} (for ``save'').
-The message will be sent to \ct{SimpleSwitchMorph}, which will cause the new class to be compiled.
-\index{yellow button}
-\index{keyboard shortcut!accept}
+\dothis{Akzeptiere die neue Klassendefinition.}
 
-Once the class definition is accepted, the class will be created and appear in the classes pane of the browser (\figref{SBECell}).
-The editing pane now shows the class definition, and a small pane below it will remind you to write a few words describing the purpose of the class. This is called a \emph{class comment}, and it is quite important to write one that will give other programmers a high-level overview of the purpose of this class.
-Smalltalkers put a very high value on the readability of their code, and detailed comments in methods are unusual: the philosophy is that the code should speak for itself. (If it doesn't, you should refactor it until it does!) A class \subind{class}{comment} need not contain a detailed description of the class, but a few words describing its overall purpose are vital if programmers who come after you are to know whether to spend time looking at this class.
+Klicke entweder mit der gelben Maustaste und wähle \menu{OK}oder verwende den Tastatur-Kurzbefehl \short{s} (für sichern). Die Nachricht wird an \ct{SimpleSwitchMorph} gesendet, was dazu führt, dass die neue Klasse kompiliert wird. 
+
+\index{gelbe Maustaste}
+\index{Tastatur Kurzbefehl!OK}
+
+Wenn die Klassendefinition akzeptiert ist, wird die Klasse erzeugt und erscheint in der Klassen-spalte des Browsers (\figref{SBEZelle}). 
+Das Editorfenster zeigt nun die Klassendefinition und eine schmale Zeile darunter erinnert dich daran, ein paar Worte zu schreiben, um den Zweck der Klasse zu beschreiben. Das nennt man einen \emph{Klassenkommentar} und es ist sehr wichtig, einen zu schreiben, denn er gibt anderen Programmierern einen allgemeinen Überblick über den Zweck dieser Klasse. Smalltalker messen der Lesbarkeit ihres Quelltextes großen Wert bei, und detaillierte Kommentare in Methoden sind ungewöhnlich: die Philosophie ist, dass der Quelltext für sich selbst spricht. (Ist das nicht der Fall, solltest du ihn überarbeiten!) Ein \subind{Klassenkommentar} muss keine ausführliche Beschreibung der Klasse enthalten, aber ein paar Worte, die den prinzipiellen Zweck beschreiben, sind unerlässlich, wenn Programmierer später entscheiden sollen, ob es sich für sie lohnt, sich diese Klasse genauer anzusehen. 
 \index{refactoring}
 
-\dothis{Type a class comment for \ct{SBECell} and accept it; you can always improve it later.}
+\dothis{Tippe einen Klassenkommentar für  \ct{SBEZelle}, du kannst ihn später immer noch verbessern.} 
 
 \begin{figure}[h!t]
 \ifluluelse
-	{\centerline {\includegraphics[width=\textwidth]{SBECell}}}
-	{\centerline {\includegraphics[scale=0.7]{SBECell}}}
-\caption{The newly-created class \ct{SBECell}\label{fig:SBECell}}
+	{\centerline {\includegraphics[width=\textwidth]{SBEZelle}}}
+	{\centerline {\includegraphics[scale=0.7]{SBEZelle}}}
+\caption{Die neu erzeugte Klasse \ct{ SBEZelle}\label{fig:SBEZelle}}
 \end{figure}
 
 %=================================================================
-\section{Adding methods to a class}
+\section{Methoden zu einer Klasse hinzufügen}
 
-Now let's add some methods to our class.
+Nun wollen wir ein paar Methoden zu unserer Klasse hinzufügen.
 
-\dothis{Select the protocol \prot{-{}-all-{}-} in the protocol pane.}
-You will see a template for method creation in the editing pane.
-Select it, and replace it by the text of \mthref{scbecellinitialize}.
+\dothis{Wähle das Protokoll \prot{-{}-all-{}-} aus der Protokoll-Spalte.}
+
+Du wirst eine Methoden-Vorlage im Editorfenster sehen. Wähle sie aus und ersetze sie durch den Text von \mthref{scbecellinitialize}.
+
 \protindex{all}
-\index{method!creation}
-\index{system browser!defining a method}
+\index{Methode!Erzeugung}
+\index{System Browser!definieren einer Methode}
 
 \needlines{10}
-\begin{numMethod}[scbecellinitialize]{Initializing instances of \ct{SBECell}}
+\begin{numMethod}[scbecellinitialize]{nitialisierung der Instanzen von \ct{SBEZelle}}
 initialize
    super initialize.
    self label: ''.
@@ -183,129 +177,106 @@ initialize
 \index{initialization}
 
 \noindent
-Note that the characters \ct{''} on line 3 are two separate single quotes with nothing between them, not a double quote!  \ct{''} denotes the empty string.
 
-\dothis{\menu{Accept} this method definition.}
+Beachte dass die \ct{''} - Zeichen in Zeile 3 zwei einzelne Anführungszeichen ohne Zwischenraum sind und kein doppeltes Anführungszeichen. \ct{''} bezeichnet eine leere Zeichenkette. 
 
-What does the above code do?  We won't go into all of the details here (that's what the rest of the book is for!), but we will give you a quick preview.  Let's take it line by line.
 
-Notice that the method is called \mthind{SBECell}{initialize}.
-The name is very significant!
-By convention, if a class defines a method named \ct{initialize}, it will be called right after the object is created.
-So, when we evaluate \ct{SBECell new}, the message \ct{initialize} will be sent automatically to this newly created object.
-Initialize methods are used to set up the state of objects, typically to set their instance variables; this is exactly what we are doing here.
-\seeindex{Object!initialization}{initialization}
-\index{initialization}
 
-The first thing that this method does (line 2) is to execute the \ct{initialize} method of its superclass, \ct{SimpleSwitchMorph}.
-The idea here is that any inherited state will be properly initialized by the \ct{initialize} method of the superclass.
-It is always a good idea to initialize inherited state by sending \ct{super initialize} before doing anything else; we don't know exactly what \ct{SimpleSwitchMorph}'s \ct{initialize} method will do, and we don't care, but it's a fair bet that it will set up some instance variables to hold reasonable default values, so we had better call it, or we risk starting in an unclean state.
+\dothis{\menu{OK} Akzeptiere diese Methodendefinition.}
 
-The rest of the method sets up the state of this object.
-Sending \ct{self label: ''}, for example, sets the label of this object to the empty string.
+Was tut der obige Quelltext? Wir wollen uns hier nicht jedes Detail ansehen (dazu ist der Rest des Buches da!), aber wir wollen einen kurzen Überblick geben. Lass uns Zeile für Zeile ansehen. 
+
+Beachte, dass der Name der Methode \mthind{SBEZelle}{initialize} ist. Der Name ist sehr wichtig! Es ist eine Konvention, dass wenn eine Klasse eine Methode namens \ct{initialize} definiert, diese direkt nach der Erzeugung eines Objektes aufgerufen wird. Wenn wir \ct{SBEZelle new} auswerten, wird die Nachricht \ct{initialize} automatisch an das neu erzeugte Objekt gesendet. Initialisierungs-Methoden werden verwendet, um einen bestimmten Objektstatus herzustellen, typischerweise, um seine Instanzvariablen zuzuweisen, das ist genau das, was wir hier tun.
+
+\seeindex{Objekt!Initialisierung}{Initialisierung}
+\index{Initialisierung}
+
+Das erste, was die Methode tut (Zeile 2), ist das Ausführen der Methode \ct{initialize} seiner Oberklasse, \ct{SimpleSwitchMorph}. Die Idee ist hier, dass jeder geerbte Status richtig initialisiert wird durch die \ct{initialize}-Methode der Oberklasse. Es ist immer eine gute Idee, den geerbten Status zu initialisieren, indem man super initialize sendet, bevor man irgendetwas anderes tut. Wir wissen nicht genau, was die \ct{initialize}-Methode vom \ct{SimpleSwitchMorph} tut, und es ist uns auch egal, aber wir könnten wetten, dass einigen Instanzvariablen sinnvolle Standardwerte zugewiesen werden, also sollten wir sie lieber aufrufen, oder wir riskieren es, in einem unklaren Zustand zu starten. 
+
+Der Rest der Methode stellt einen Zustand des Objektes her. Durch das Senden von  \ct{self label: ''} wird beispielsweise die Beschriftung dieses Objektes auf eine leere Zeichenkette gesetzt.
 \pvindex{self}
 
-The expression \ct{0@0 corner: 16@16} probably needs some explanation. 
-\lct{0@0} represents a \clsind{Point} object with $x$ and $y$ coordinates both set to 0.
-In fact, \ct{0@0} sends the message \ct{@}% Yuck... the following should be \mthind{Number}{@} 
-%%% THIS IS BROKEN -- don't do it! (on)
-%\def\atsign{\textsf{@}}%
-%{\makeatletter
-%	\protected@write\@indexfile{}%
-%    {\string\indexentry{\string\atsign|see{Number, \string\atsign}}{\thepage}}%
-%	\protected@write\@indexfile{}%
-%    {\string\indexentry{Number!\string\atsign|hyperpage}{\thepage}}%
-%	\makeatother}
-to the number \ct{0} with argument \ct{0}.
-The effect will be that the number \ct{0} will ask the \ct{Point} class to create a new instance with coordinates (0,0).
-Now we send this newly created point the message \ct{corner: 16@16}, which causes it to create a \clsind{Rectangle} with corners \ct{0@0} and \ct{16@16}.
-This newly created rectangle will be assigned to the \ct{bounds} variable, inherited from the superclass.
-
-Note that the origin of the \sq screen is the \emph{top left}, and the $y$ coordinate increases \emph{downwards}.
-
-The rest of the method should be self-explanatory.
-Part of the art of writing good \st code is to pick good method names so that \st code can be read like a kind of pidgin English.
-You should be able to imagine the object talking to itself and saying ``\ct{Self use square corners!}'', ``\ct{Self turn off!}''.
+Der Ausdruck \ct{0@0 corner: 16@16} bedarf wahrscheinlich einer Erläuterung. \lct{0@0} stellt ein \clsind{Point}-Objekt dar, dessen $x$ und $y$ Koordinaten beide auf 0 gesetzt sind. Tatsächlich sendet \ct{0@0} die Nachricht @ an die Zahl \ct{0} mit dem Argument \ct{0}. Der Effekt davon ist, dass die Zahl \ct{0} die Klasse \ct{Point} auffordert, eine neue Instanz mit den Koordinaten (0,0) zu erzeugen. Nun senden wir diesem neu erzeugten Point die Nachricht \ct{corner: 16@16}, was es dazu bewegt, ein \clsind{Rechteck} mit den Eckpunkten \ct{0@0} und \ct{16@16} zu erzeugen. Dieses neu erzeugte Rechteck wird der \ct{bounds}-Variable zugewiesen, die von der Oberklasse geerbt wurde.
+Beachte, dass der Ursprung des \sq -Bildschirms \emph{oben links} ist und die $y$-Koordinate sich \emph{abwärts} erhöht.
+Der Rest der Methode sollte selbsterklärend sein. Teil der Kunst, guten \st-Quelltext zu schreiben, ist es, gute Methodennamen auszuwählen, so dass man \st-Quelltext wie eine Art Pidgin-Englisch lesen kann. Du solltest in der Lage sein, dir das Objekt vorzustellen, wie es mit sich selber spricht und sagt ``\ct{Self use square corners!}'',``\ct{Self turn off!}''.
 
 %=================================================================
-\section{Inspecting an object}
+\section{Ein Objekt untersuchen}
 
-You can test the effect of the code you have written by creating a new \ct{SBECell} object and inspecting it.
+Du kannst die Auswirkungen des Quelltextes, den du geschrieben hast, testen, indem du ein neues \ct{SBEZelle}-Objekt erzeugst und untersuchst. 
 
-\dothis{Open a workspace. Type the expression \ct{SBECell new} and \menu{inspect it}.}
+\dothis{Öffne einen Workspace. Tippe den Ausdruck \ct{SBEZelle new} und \menu{Untersuchen}.}
 
 \begin{figure}[htbp]
    \centering
-   \includegraphics[scale=0.7]{SBECellInspector} 
-   \caption{The inspector used to examine a SBECell object.\label{fig:SBECellInspector}}
+   \includegraphics[scale=0.7]{SBEZelleInspektor} 
+   \caption{Der Inspektor wird benutzt, um ein SBEZelle-Objekt zu untersuchen.\label{fig:SBEZelleInspektor}}
 \end{figure}
 
-The left-hand pane of the \ind{inspector} shows a list of instance variables; if you select one (try \mbox{\ct{bounds}),} the value of the \ind{instance variable} is shown in the right pane.  You can also use the inspector to change the value of an instance variable.
+Die linke Spalte im  \ind{Inspektor} zeigt eine Liste der Instanzvariablen; wenn du eine auswählst (versuch es mit \ct{bounds}, wird der Wert der \ind{Instanzvariable} in der rechten Spalte angezeigt. Du kannst den Inspektor auch benutzen, um den Wert einer Instanzvariable zu verändern. 
 
-\dothis{Change the value of \ct{bounds} to \ct{0@0 corner: 50@50} and \menu{accept} it.}
 
-The bottom pane of the inspector is a mini-workspace.  It's useful because in this workspace the pseudo-variable \self is bound to the object being inspected. 
+\dothis{Verändere den Wert von \ct{bounds} zu \ct{0@0 corner: 50@50} und \menu{OK}.}
 
-\dothis{Type the text \ct{self openInWorld} in the bottom pane and \menu{do it}.}
-The cell should appear at the top left-hand corner of the screen, indeed, exactly where its \ct{bounds} say that it should appear.
-Blue-click on the cell to bring up the morphic \subind{Morphic}{halo}.
-Move the cell with the brown (next to top-right) handle and resize it with the yellow (bottom-right) handle.
-Notice how the bounds reported by the inspector also change.
+Die Fußzeile des Inspektors ist ein Mini-Workspace. Er ist nützlich, weil in diesem Workspace die Pseudo-Variable \self an das Objekt gebunden ist, das untersucht wird.
+
+\dothis{Tippe den Text \ct{self openInWorld} in die Fußzeile und \menu{Ausführen}.}
+
+Die Zelle sollte in der linken oberen Ecke des Bildschirms erscheinen, in der Tat genau da, wo ihre \ct{bounds} angeben, dass sie erscheinen sollte. Ein Klick mit der blauen Maustaste öffnet die \subind{Morphic}{Smarties}. Bewege die Zelle mit dem braunen Smartie (oben rechts)und verändere die Größe mit dem gelben Smartie (unten rechts). Beachte, wie die bounds  im Inspektor sich ebenfalls verändern!
 
 \begin{figure}[htbp]
 \centering
 \ifluluelse
 	{\includegraphics[width=\textwidth]{SBECellResize} }
 	{\includegraphics[scale=0.7]{SBECellResize} }
-\caption{Resizing the cell.\label{fig:cellresize}}
+\caption{Verändern der Größe der Zelle.\label{fig:cellresize}}
 \end{figure}
 
-\dothis{Delete the cell by clicking on the \ct{x} in the pink handle.}
+\dothis{Lösche die Zelle, indem du auf das rosa Smartie mit dem  \ct{x} klickst.}
 
 
 %=================================================================
-\section{Defining the class SBEGame}
+\section{Definition der Klasse SBESpiel}
 
-Now let's create the other class that we need for the game, which we will call \clsind{SBEGame}.
+Nun wollen wir die andere Klasse definieren, die wir für unser Spiel brauchen, die wir \clsind{SBESpiel} nennen wollen. 
 
-\dothis{Make the class definition template visible in the browser main window.}
-Do this by clicking twice on the name of the already-selected class category, or by displaying the definition of \ct{SBECell} again (by clicking the \button{instance} button.)
-Edit the code so that it reads as follows, and \menu{accept} it.
+
+\dothis{Zeige die Vorlage für die Klassendefinition im Editorfenster des Browsers an.}
+
+Tu das, indem du zweimal auf den Namen der bereits ausgewählten Klassenkategorie klickst oder die Definition von \ct{SBEZelle} nochmals anzeigst (durch Klick auf den \button{instance}-Knopf.) Editiere den Quelltext, so dass er wie folgt lautet und \menu{OK}: 
 
 \needlines{6}
-\begin{classdef}[sbegame]{Defining the \ct{SBEGame} class}
-BorderedMorph subclass: #SBEGame
+\begin{classdef}[sbegame]{Definition der Klasse \ct{SBESpiel}}
+BorderedMorph subclass: #SBESpiel
    instanceVariableNames: ''
    classVariableNames: ''
    poolDictionaries: ''
    category: 'SBE-Quinto'
 \end{classdef}
 
-Here we subclass \clsind{BorderedMorph}; \clsind{Morph} is the superclass of all of the graphical shapes in \squeak, and (surprise!) a \ct{BorderedMorph} is a \ct{Morph} with a border.  
-We could also insert the names of the instance variables between the quotes on the second line, but for now, let's just leave that list empty.
+Hier erzeugen wir eine Unterklasse von \clsind{BorderedMorph}; \clsind{Morph} ist die Oberklasse aller graphischen Formen in \squeak und (Überraschung!) ein \ct{BorderedMorph} ist ein \ct{Morph} mit einem Rand. Wir könnten auch die Namen der Instanzvariablen zwischen den Anführungszeichen in der zweiten Zeile einsetzen, aber erstmal lassen wir diese Liste leer. 
 
-Now let's define an \mthind{SBEGame}{initialize} method for \ct{SBEGame}.
+Nun wollen wir eine  \mthind{initialize}-Methode für \ct{SBESpiel} definieren. 
 
-\dothis{Type the following into the browser as a method for \ct{SBEGame} and try to \menu{accept} it:}
+\dothis{Tippe das Folgende als Methode für \ct{SBESpiel} in den Browser und versuche es mit \menu{OK} zu übersetzen:}
 
-\begin{numMethod}[sbegameinitialize]{Initializing the game}
+\begin{numMethod}[sbegameinitialize]{Initialisierung des Spiels}
 initialize
-   | sampleCell width height n |
+   | musterZelle breite hoehe n |
    super initialize.
-   n := self cellsPerSide.
-   sampleCell := SBECell new.
-   width := sampleCell width.
-   height := sampleCell height.
+   n := self zellenProSeite.
+   musterZelle := SBEZelle new.
+   breite := musterZelle width.
+   hoehe := musterZelle height.
    self bounds: (5@5 extent: ((width*n) @(height*n)) + (2 * self borderWidth)).
-   cells := Matrix new: n tabulate: [ :i :j | self newCellAt: i at: j ].
+   cells := Matrix new: n tabulate: [ :i :j | self neueZelleBei: i bei: j ].
 \end{numMethod}
 
 %\sd{it would be nicer if we would not have to create an instance of SBECell for nothing}
 %\on{yes}
 
-\squeak will complain that it doesn't know the meaning of some of the terms.
-\squeak tells you that it doesn't know of a message \ct{cellsPerSide}, and suggests a number of corrections, in case it was a spelling mistake.
 
+\squeak wird beanstanden, dass es die Bedeutung einiger Terme nicht kennt. \squeak teilt dir mit, dass es keine Nachricht \ct{zellenProSeite} kennt und schlägt eine Reihe von Korrekturen vor für den Fall, dass ein Schreibfehler vorliegt. 
 
 \begin{figure}[htb]
 \begin{minipage}{0.34\textwidth}
@@ -313,7 +284,7 @@ initialize
 	\ifluluelse
 		{\includegraphics[width=\textwidth]{UnknownSelector}}
 		{\includegraphics[scale=0.7]{UnknownSelector}}
-	\caption{\squeak detecting an unknown selector.\label{fig:unknownSelector}}
+	\caption{\squeak entdeckt einen unbekannten Selektor.\label{fig:unknownSelector}}
 \end{minipage}
 \hfill
 \begin{minipage}{0.64\textwidth}
@@ -321,42 +292,38 @@ initialize
 	\ifluluelse
 		{\includegraphics[width=\textwidth]{DeclareInstanceVar}}
 		{\includegraphics[scale=0.7]{DeclareInstanceVar}}
-	\caption{Declaring a new instance variable.\label{fig:declareInstance}}
+	\caption{Deklaration einer neuen Instanzvariable.\label{fig:declareInstance}}
 \end{minipage}
 \end{figure}
 
-But \ct{cellsPerSide} is not a mistake\,---\,it is just a method that we haven't yet defined\,---\,we will do so in a minute or two.
+Aber \ct{zellenProSeite} ist kein Fehler\,---\,es ist nur eine Methode, die wir noch nicht definiert haben\,---\, wir tun das in 1-2 Minuten.
 
-\dothis{So just select the first item from the menu, which confirms that we really meant \ct{cellsPerSide}.}
 
-Next, \squeak will complain that it doesn't know the meaning of \ct{cells}.  It offers you a number of ways of fixing this.
+\dothis{Wähle deshalb den ersten Eintrag aus dem Menü, welcher bestätigt, dass wir wirklich \ct{zellenProSeite} meinen.}
 
-\dothis{Choose \menu{declare instance} because we want \ct{cells} to be an instance variable.}
-Finally, \squeak will complain about the message \ct{newCellAt:at:} sent on the last line; this is also not a mistake, so confirm that message too.
-\index{on the fly variable definition}
-\index{instance variable definition} 
+Als Nächstes wird \squeak sich beschweren, dass es die Bedeutung von \ct{zellen} nicht kennt. Es bietet dir verschiedene Wege, das in Ordnung zu bringen. 
 
-If you now look at the class definition once again (which you can do by clicking on the \button{instance} button), you will see that the browser has modified it to include the instance variable \ct{cells}.
 
-Let's look at this \ct{initialize} method.
-The line \ct{| sampleCell width height n |}  declares 4 temporary variables. They are called temporary variables because their scope and lifetime are limited to this method.  Temporary variables with explanatory names are helpful in making code more readable.  Smalltalk has no special syntax to distinguish constants and variables, and in fact all four of these ``variables'' are really constants. 
-Lines 4--7 define these constants.
+\dothis{Wähle \menu{declare instance}, weil wir \ct{zellen} als Instanzvariable haben wollen.}
 
-How big should our game board be?  Big enough to hold some integral number of cells, and big enough to draw a border around them.
-How many cells is the right number?  5? 10? 100? We don't know yet, and if we did, we would probably change our minds later.  So we delegate the responsibility for knowing that number to another method, which we will call \ct{cellsPerSide}, and which we will write in a minute or two.
-It's because we are sending the \ct{cellsPerSide} message before we define a method with that name that \squeak asked us to ``confirm, correct, or cancel'' when we accepted the method body for \ct{initialize}.
-Don't be put off by this: it is actually good practice to write in terms of other methods that we haven't yet defined.
-Why?  Well, it wasn't until we started writing the \ct{initialize} method that that we realized that we needed it, and at that point, we can give it a meaningful name, and move on, without interrupting our flow.
- 
-The fourth line uses this method: 
-the Smalltalk \ct{self cellsPerSide} sends the message \ct{cellsPerSide} to \pvind{self}, i.e., to this very object.  
-The response, which will be the number of cells per side of the game board, is assigned to \ct{n}.
+Schließlich wird \squeak die Nachricht  \ct{neueZelleBei:bei:} beanstanden, die in der letzten Zeile steht. Das ist ebenfalls kein Fehler, also bestätigen wir diese Nachricht ebenfalls. 
 
-The next three lines create a new \ct{SBECell} object, and assign its width and height to the appropriate temporary variables. 
+\index{Variablendeklaration on the fly}
+\index{Definition von Instanzvariablen} 
+
+Wenn du dir jetzt wieder die Klassendefinition anschaust (was du tun kannst, indem du auf den  \button{instance}-Knopf klickst), siehst du, dass der Browser den Text modifiziert hat, indem er die Instanzvariable \ct{zellen} eingefügt hat.
+
+Schauen wir uns die \ct{initialize}e-Methode an. Die Zeile \ct{|musterZelle breite hoehe n|} deklariert 4 temporäre Variablen. Sie heißen temporäre Variablen, weil ihre Gültigkeit und ihre Lebensdauer auf diese Methode beschränkt sind. Temporäre Variablen mit selbsterklärenden Namen sind hilfreich, um den Quelltext besser lesbar zu machen. Smalltalk hat keine Syntax, um zwischen Konstanten und Variablen zu unterscheiden, und genau genommen sind diese 4  ``Variablen'' eigentlich Konstanten. Zeilen 4--7 definieren diese Konstanten. 
+
+Wie groß soll unser Spielfeld sein? Groß genug, um eine ganze Anzahl von Zellen aufzunehmen und groß genug, einen Rand darum zu zeichnen. Welche Anzahl von Zellen ist richtig? 5? 10? 100? wir wissen es jetzt nicht, und falls wir es wüssten, würden wir unsere Meinung wahrscheinlich später ändern. So delegieren wir die Verantwortlichkeit für die Anzahl der Zellen an eine andere Methode, die wir zellenProSeite nennen und die wir gleich schreiben werden. Weil wir die Nachricht \ct{zellenProSeite} senden, bevor wir eine Methode dieses Namens definieren, fordert \squeak uns auf ``confirm, correct, or cancel'' auszuwählen, wenn wir die Methode \ct{initialize} akzeptieren wollen. Lass dich davon nicht abschrecken, es ist eine gute Möglichkeit, im Hinblick auf Methoden zu schreiben, die noch nicht definiert sind. Warum? Nun, erst als wir die  \ct{initialize}-Methode geschrieben haben, haben wir festgestellt, dass wir die Methode brauchen. Wir können ihr bereits zu diesem Zeitpunkt einen sinnvollen Namen geben und weitermachen, ohne unseren Arbeitsablauf zu unterbrechen.
+
+Die vierte Zeile nutzt diese Methode: der Smalltalk-Ausruck \ct{self zellenProSeite} sendet die Nachricht \ct{zellenProSeite} an \pvind{self}, das heißt an genau dieses Objekt. Die Antwort, die die Anzahl von Zellen pro Seite des Spielfeldes sein wird, wird \ct{n} zugewiesen.
+Die nächsten drei Zeilen erzeugen das neue \ct{SBEZelle}-Objekt und weisen die Höhe und Breite den passenden temporären Variablen zu.
 
 %The eighth line sends the message \ct{bounds:} to \self.
 %\ct{bounds:} is a method that we inherit from our superclass; it is used to define the space on the screen that this Morph will occupy.  
 %The single colon (\ct{:}) at the end of the name says that \ct{bounds:} expects a single parameter, which should be a rectangle object.
+
 Line 8 sets the \ct{bounds} of the new object.
 Without worrying too much about the details just yet, just believe us that the expression in parentheses creates a square with its origin (\ie its top-left corner) at the point (5,5) and its bottom-right corner far enough away to allow space for the right number of cells.
 
