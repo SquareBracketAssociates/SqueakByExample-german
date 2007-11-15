@@ -369,12 +369,12 @@ Woher weiß \squeak{}, dass das das richtige Protokoll ist? Nun, im Prinzip kann 
 Möglicherweise stellst du fest, dass \squeak deine \ct{initialize}- Methode bereits in das Protokoll \protind{initialization} eingeordent hat. Wenn das so ist, dann liegt das daran, dass du ein Package namens \ct{AutomaticMethodCategorizer} in dein Image geladen hast.
 
 
-\paragraph{Eine typographische Konvention.} Smalltalker nutzen hŠufig die Schreibweise ``\verb|>>|'', um die Klasse zu identifizieren, zu der eine Methode gehšrt. So wŸrde die Methode \ct{zellenProSeite}  in der Klasse \ct{SBESpiel}  beispielsweise durch \ct{SBESpiel>>zellenProSeite} referenziert werden. Um klarzustellen, dass das \emph{keine} \st Syntax ist, verwenden wir das Zeichen \ct{>>>} stattdessen, so dass diese Methode im Text als \ct{SBESpiel>>>zellenProSeite} erscheint.
+\paragraph{Eine typographische Konvention.} Smalltalker nutzen häufig die Schreibweise ``\verb|>>|'', um die Klasse zu identifizieren, zu der eine Methode gehört. So würde die Methode \ct{zellenProSeite}  in der Klasse \ct{SBESpiel} beispielsweise durch \ct{SBESpiel>>zellenProSeite} referenziert werden. Um klarzustellen, dass das \emph{keine} \st Syntax ist, verwenden wir das Zeichen \ct{>>>} statt dessen, so dass diese Methode im Text als \ct{SBESpiel>>>zellenProSeite} erscheint.
 \cmindex{Behavior}{>>}
 
-Von jetzt an schreiben wir, wenn wir in diesem Buch eine Methode zeigen, den Namen der Methode in dieser Form.  NatŸrlich musst du, wenn du den Quelltext in den Browser schreibst, den Klassennamen oder \ct{>>>} nicht mitschreiben; statt dessen musst du nur sicherstellen, dass die entsprechende Klasse in der Klassenspalte ausgewŠhlt ist.
+Von jetzt an schreiben wir, wenn wir in diesem Buch eine Methode zeigen, den Namen der Methode in dieser Form.  Natürlich musst du, wenn du den Quelltext in den Browser schreibst, den Klassennamen oder \ct{>>>} nicht mitschreiben; statt dessen musst du nur sicherstellen, dass die entsprechende Klasse in der Klassenspalte ausgewählt ist.
 
-Lass uns nun die anderen beiden Methoden definieren, die in der  Methode \ct{SBESpiel>>>initialize}  benutzt werden. Beide kšnnen in das Protokoll \prot{initialization} eingefŸgt werden.
+Lass uns nun die anderen beiden Methoden definieren, die in der  Methode \ct{SBESpiel>>>initialize}  benutzt werden. Beide können in das Protokoll \prot{initialization} eingefügt werden.
 
 
 \begin{method}[sbespielzellenproseite]{Eine Konstanten-Methode.}
@@ -385,12 +385,12 @@ SBESpiel>>>zellenProSeite
 \cmindex{SBESpiel}{zellenProSeite}
 \index{constant methods}
 
-Diese Methode kšnnte kaum einfacher sein: sie antwortet mit der Konstanten 10. Ein Vorteil der Darstellung von Konstanten durch Methoden ist, dass die Methode geŠndert werden kann und den Wert der Konstanten berechnet, wenn das Programm sich so weiterentwickelt, dass die Konstante von anderen Eigenschaften abhŠngt.
+Diese Methode könnte kaum einfacher sein: sie antwortet mit der Konstanten 10. Ein Vorteil der Darstellung von Konstanten durch Methoden ist, dass die Methode geändert werden kann und den Wert der Konstanten berechnet, wenn das Programm sich so weiterentwickelt, dass die Konstante von anderen Eigenschaften abhängt.
 
 \needlines{10}
-\begin{method}[neueZelleBei:bei:]{Eine Hilfsmethode fŸr die Initialisierung}
+\begin{method}[neueZelleBei:bei:]{Eine Hilfsmethode für die Initialisierung}
 SBESpiel>>>neueZelleBei: i bei: j
-   "Erzeugt eine Zelle fŸr Position (i,j) und fŸgt sie am Bildschirm an der passenden Position ein. Gibt eine neue Zelle zurŸck."
+   "Erzeugt eine Zelle für Position (i,j) und fügt sie am Bildschirm an der passenden Position ein. Gibt eine neue Zelle zurück."
    | c ursprung |
    c := SBEZelle new.
    ursprung := self innerBounds origin.
@@ -401,13 +401,13 @@ SBESpiel>>>neueZelleBei: i bei: j
 \cmindex{SBESpiel}{neueZelleBei:bei:}
 %   ^ c      "omit this final line to create a bug"
 
-\dothis{FŸge die Methoden \ct{SBESpiel>>>zellenProSeite} and \ct{SBESpiel>>>neueZelleBei:bei:} hinzu.}
-BestŠtige die Schreibweise der neuen Selektoren \ct{schalteNachbarnVonZelleBei:bei:} und \ct{mausAktion:}.
+\dothis{Füge die Methoden \ct{SBESpiel>>>zellenProSeite} and \ct{SBESpiel>>>neueZelleBei:bei:} hinzu.}
+Bestätige die Schreibweise der neuen Selektoren \ct{schalteNachbarnVonZelleBei:bei:} und \ct{mausAktion:}.
 
-\Mthref{neueZelleBei:bei:} gibt eine neue SBEZelle zurŸck, speziell an Position \ct{(i, j)} in der \clsind{Matrix} der Zellen.
+\Mthref{neueZelleBei:bei:} gibt eine neue SBEZelle zurück, speziell an Position \ct{(i, j)} in der \clsind{Matrix} der Zellen.
 Die letzte Zeile definiert, dass die \ct{mausAktion} der neuen Zelle der  \emph{Block}
 \mbox{\lct{[self schalteNachbarnVonZelleBei: i bei: j ]}. ist}
-Eigentlich legt dies das Antwortverhalten fest, was ausgefŸhrt wird, wenn die Maustaste betŠtigt wird. Die korrespondierende Methode muss ebenfalls definiert werden.
+Eigentlich legt dies das Antwortverhalten fest, was ausgeführt wird, wenn die Maustaste betätigt wird. Die korrespondierende Methode muss ebenfalls definiert werden.
 
 
 \begin{method}[schalteNachbarnVonZelleBei:bei:]{Die callback- Methode.}
@@ -419,7 +419,7 @@ SBESpiel>>>schalteNachbarnVonZelleBei: i bei: j
 \end{method}
 \cmindex{SBESpiel}{schalteNachbarnVonZelleBei:bei:}
 
-\Mthref{schalteNachbarnVonZelleBei:bei:} schaltet den Zustand der vier Zellen im Norden, SŸden, Westen und Osten von Zelle (\ct{i}, \ct{j}) um.  Die einzige Komplikation liegt darin, dass das Spielfeld endlich ist und wir sicherstellen mŸssen, dass eine Nachbarzelle existiert, bevor ihren Zustand umschalten.
+\Mthref{schalteNachbarnVonZelleBei:bei:} schaltet den Zustand der vier Zellen im Norden, Süden, Westen und Osten von Zelle (\ct{i}, \ct{j}) um.  Die einzige Komplikation liegt darin, dass das Spielfeld endlich ist und wir sicherstellen müssen, dass eine Nachbarzelle existiert, bevor ihren Zustand umschalten.
 
 
 \dothis{Ordne diese Methode in ein neues Protokoll namens \prot{spiel logik} ein.\damien{this has to be explained. There were no explications before on how to create a new protocol.}}
@@ -433,7 +433,7 @@ Um eine Methode zu bewegen kannst du einfach auf ihren Namen klicken und sie in 
    \caption{Ziehe eine Methode in ein Protokoll. \label{fig:dragMethod}}
 \end{figure}
 
-Um das Quinto-Spiel fertigzustellen, mŸssen wir noch zwei Methoden in der Klasse \ct{SBEZelle}  definieren, die sich um die Mausereignisse kŸmmern.
+Um das Quinto-Spiel fertigzustellen, müssen wir noch zwei Methoden in der Klasse \ct{SBEZelle}  definieren, die sich um die Mausereignisse kümmern.
 
 \begin{method}[mausAktion:]{Eine typische setter-Methode}
 SBEZelle>>>mausAktion: einBlock
@@ -441,29 +441,29 @@ SBEZelle>>>mausAktion: einBlock
 \end{method}
 \cmindex{SBEZelle}{mausAktion:}
 
-\Mthref{mausAktion:}  macht weiter nichts als der Variablen \ct{mausAktion} der Zelle das Argument zuzuweisen und dann den neuen Wert zurŸckzugeben.
-Eine Methode die den Wert einer Instanzvariable \emph{Šndert}, wird \emph{setter Methode} genannt; eine Methode die den aktuellen Wert einer Instanzvariable \emph{zurŸckgibt}, hei§t \emph{getter-Methode}.
+\Mthref{mausAktion:} macht weiter nichts als der Variablen \ct{mausAktion} der Zelle das Argument zuzuweisen und dann den neuen Wert zurückzugeben.
+Eine Methode die den Wert einer Instanzvariable \emph{ändert}, wird \emph{setter Methode} genannt; eine Methode die den aktuellen Wert einer Instanzvariable \emph{zurückgibt}, heißt \emph{getter-Methode}.
 
 \seeindex{setter method}{accessor}
 \seeindex{getter method}{accessor}
 
-Wenn du getter und setter aus anderen Programmiersprachen kennst, erwartest du vielleicht, dass sie \ct{setmausAktion} und   \ct{getmausAktion} hei§en. Die  \st  Konventionen sind anders. Ein getter hat immer den selben Namen wie die Variable, die er liest und ein setter ist Šhnlich benannt, er hat nur ein angehŠngtes ``\ct{:}'', also  \ct{mausAktion} und \ct{mausAktion:}.
+Wenn du getter und setter aus anderen Programmiersprachen kennst, erwartest du vielleicht, dass sie \ct{setmausAktion} und   \ct{getmausAktion} heißen. Die \st Konventionen sind anders. Ein getter hat immer den selben Namen wie die Variable, die er liest und ein setter ist ähnlich benannt, er hat nur ein angehängtes ``\ct{:}'', also  \ct{mausAktion} und \ct{mausAktion:}.
 
 Gemeinsam werden beide,  setter und getter, als \emphind{accessor} Methoden bezeichnet, und sie sollten, der Konvention folgend, ins \protind{accessing} Protokoll eingeordnet werden.
-In Smalltalk sind \emph{alle} Instanzvariablen in dem Objekt gekapselt, dem sie angehšren, so dass der einzige Weg fŸr andere Objekte, diese Variablen in Smalltalk zu lesen oder zu schreiben in derartigen accessor-Methoden besteht \footnote{TatsŠchlich kann auf die Instanzvariablen auch in Unterklassen zugegriffen werden.}.
+In Smalltalk sind \emph{alle} Instanzvariablen in dem Objekt gekapselt, dem sie angehören, so dass der einzige Weg für andere Objekte, diese Variablen in Smalltalk zu lesen oder zu schreiben in derartigen accessor-Methoden besteht \footnote{Tatsächlich kann auf die Instanzvariablen auch in Unterklassen zugegriffen werden.}.
 
 
 \dothis{Gehe zur Klasse \ct{SBEZelle}, definiere \ct{SBEZelle>>>mausAktion:} und lege sie in das \prot{accessing} Protokoll.}
 
-Letztendlich mŸssen wir noch eine Methode \ct{mouseUp:} definieren; diese wird automatisch von der GUI-Umgebung aufgerufen, wenn die Maustaste losgelassen wird, wŠhrend die Maus sich Ÿber dieser Zelle auf dem Bildschirm befindet.
+Letztendlich müssen wir noch eine Methode \ct{mouseUp:} definieren; diese wird automatisch von der GUI-Umgebung aufgerufen, wenn die Maustaste losgelassen wird, während die Maus sich über dieser Zelle auf dem Bildschirm befindet.
 
-\begin{method}[sbezellzmouseup]{Eine Ereignisbehandlung}
+\begin{method}[sbezellemouseup]{Eine Ereignisbehandlung}
 SBECell>>>mouseUp: anEvent
    mausAktion value
 \end{method}
 \cmindex{SBEZelle}{mouseUp:}
 
-\dothis{FŸge die Methode \ct{SBEZelle>>>mouseUp:} hinzu und kategorisiere sie mit \menu{categorize all uncategorized} methods.}
+\dothis{Füge die Methode \ct{SBEZelle>>>mouseUp:} hinzu und kategorisiere sie mit \menu{categorize all uncategorized} methods.}
 \index{method!categorize}
 
 Was diese Methode tut, ist, die Nachricht  \ct{value} an das Objekt zu senden, das in der Instanzvariable \ct{mausAktion} gespeichert ist.  
@@ -472,10 +472,10 @@ Erinnere dich, dass wir in \ct{SBESpiel>>>neueZelleBei: i bei: j} folgendes Quel
 \ct{[self schalteNachbarnVonZelleBei: i bei: j ]} 
 
 \noindent
-Das Senden der Nachricht \ct{value} veranlasst die AusfŸhrung dieses Quelltext-Fragmentes und wird so konsequenterweise den Zustand der Zellen umschalten.
+Das Senden der Nachricht \ct{value} veranlasst die Ausführung dieses Quelltext-Fragmentes und wird so konsequenterweise den Zustand der Zellen umschalten.
 
 %=================================================================
-\section{Lass uns unseren Quelltext ausfŸhren}
+\section{Lass uns unseren Quelltext ausführen}
 
 Das wars: das Quinto-Spiel ist fertig!
 
@@ -506,14 +506,14 @@ Der Debugger wird sich öffnen. Im oberen Teil des Debugger-Fensters kann man den
 
 
 \dothis{Klicke auf die Zeile \ct{SBESpiel>>>schalteNachbarnVonZelleBei:bei:} (recht weit oben).}
-der Debugger zeigt den  \ind{AusfŸhrungskontext} in dieser Methode, wo der Fehler auftrat
+der Debugger zeigt den  \ind{Ausführungskontext} in dieser Methode, wo der Fehler auftrat
 (\figref{debugToggle}).
 
 \begin{figure}[ht]
 \ifluluelse
 	{\centerline {\includegraphics[width=\textwidth]{Debugger}}}
 	{\centerline {\includegraphics[scale=0.7]{Debugger}}}
-\caption{Der Debugger, mit der Methode \ct{schalteNachbarnVonZelleBei:bei:} ausgewŠhlt.
+\caption{Der Debugger, mit der Methode \ct{schalteNachbarnVonZelleBei:bei:} ausgewählt.
 \label{fig:debugToggle}}
 \end{figure}
 
@@ -532,15 +532,14 @@ Das Durchsuchen des Quelltextes von \cmind{SBESpiel}{initialize} zeigt, dass \ct
 (See \mthref{neueZelleBei:bei:nobug}.)}
 % \needlines{6}
 \begin{method}[neueZelleBei:bei:nobug]{Den Fehler beheben.}
-SBEGame>>>newCellAt: i at: j
-   "Create a cell for position (i,j) and add it to my on-screen
-   representation at the appropriate screen position.  Answer the new cell"
-   | c origin |
-   c := SBECell new.
-   origin := self innerBounds origin.
+SBESpiel>>>neueZelleBei: i bei: j
+   "Erzeugt eine Zelle für Position (i,j) und fügt sie am Bildschirm an der passenden Position ein. Gibt eine neue Zelle zurück."
+   | c ursprung |
+   c := SBEZelle new.
+   ursprung := self innerBounds origin.
    self addMorph: c.
-   c position: ((i - 1) * c width) @ ((j - 1) * c height) + origin.
-   c mouseAction: [self toggleNeighboursOfCellAt: i at: j].
+   c position: ((i - 1) * c width) @ ((j - 1) * c height) + ursprung.
+   c mausAktion: [self schalteNachbarnVonZelleBei: i bei: j ].
    ^ c
 \end{method}
 \cmindex{SBEGame}{newCellAt:at:}
@@ -565,27 +564,24 @@ Nun sollte das Spiel ordentlich laufen.
 %\on{I think that is too much for this chapter. It will come soon enough.}
 
 %=================================================================
-\section{Saving and sharing Smalltalk code}
+\section{Smalltalk Quelltext sichern und verteilen}
 \label{sec:Monticello}
 
-Now that you have the Quinto game working, you probably want to save it somewhere so that you can share it with your friends. Of course, you can save your whole \squeak image, and show off your first program by running it, but your friends probably have their own code in their images, and don't want to give that up to use your image.
-What you need is a way of getting source code out of your \squeak image so that other programmers can bring it into theirs.
+Da nun das Quinto-Spiel funktioniert, möchtest du es sicher irgendwo speichern, so dass du es auch an deine Freunde weitergeben kannst. Natürlich kannst du dein gesamtes \squeak Image sichern und dein erstes Programm zeigen, indem du es dann laufen lässt, aber deine Freunde haben wahrscheinlich ihren eigenen Quelltext in ihren Image-Dateien und wollen den nicht verlieren, indem sie dein Image benutzen.  
+Was du brauchst ist eine Möglichkeit, den Quelltext aus dem \squeak Image zu extrahieren, so dass andere Programmierer ihn in ihr Image einbinden können.
 
-The simplest way of doing this is by \emph{filing out} the code.  The yellow-button menu in the System Categories pane will give you the option to file out the whole of category \scat{SBE-Quinto}.
-The resulting file is more or less human readable, but is really intended for computers, not humans.
-You can email this file to your friends, and they can file it into their own \squeak images using the file list browser.
+Der einfachste Weg, dies zu tun, ist das \emph{filing out} des Quelltextes. Das gelbe Mausmenü in der Spalte System-Kategorie bietet dir die Möglichkeit, die gesamte Kategorie \scat{SBE-Quinto} zu extrahieren. Die resultierende Datei ist mehr oder weniger gut lesbar, aber eigentlich für den Computer gedacht, nicht für den Menschen. Man kann dies per Email an seine Freunde schicken und diese können den Quelltext in ihr eigenes \squeak Image einbinden, indem sie den Dateilisten-Braowser verwenden.
+
 \seeindex{saving code}{categories}
 \seeindex{category!filing out}{file, filing out}
 \seeindex{class!filing out}{file, filing out}
 \seeindex{method!filing out}{file, filing out}
 \index{file!filing out}
 
-\dothis{Yellow-click on the \scat{SBE-Quinto} category and \menu{fileOut} the contents.}
-You should now find a file called ``SBE-Quinto.st'' in the same folder on disk where your image is saved.
-Have a look at this file with a text editor.
+\dothis{KLicke auf die gelbe Maustaste i n der \scat{SBE-Quinto} Kategorie und wähle \menu{fileOut}.}
+Jetzt solltest du eine Datei namens ``SBE-Quinto.st'' in selben Verzeichnis finden, in dem auch deine Image-Datei abgelegt ist. Sieh dir die Datei in einem Texteditor an.
 
-\dothis{Open a fresh \squeak image and use the File List tool to \menu{file in} the SBE-Quinto.st fileout.
-Verify that the game now works in the new image.}
+\dothis{Öffne ein frisches \squeak Image und verwende das Dateilisten-Werkzeug mit \menu{file in}, um SBE-Quinto.st einzubinden. Stelle sicher, dass das SPiel nun auch in dem neuen Image funktioniert.}
 \seeindex{category!filing in}{file, filing in}
 \seeindex{class!filing in}{file, filing in}
 \seeindex{method!filing in}{file, filing in}
@@ -597,7 +593,7 @@ Verify that the game now works in the new image.}
 \label{fig:filein}}
 \end{figure}
 
-\subsection{Monticello packages}
+\subsection{Monticello Packages}
 Although fileouts are a convenient way of making a snapshot of the code you have written, they are decidedly ``old school''.
 Just as most open-source projects find it much more convenient to maintain their code in a repository using \ind{CVS}\footnote{\url{www.nongnu.org/cvs}} or \ind{Subversion}\footnote{\url{subversion.tigris.org}},
 so \squeak programmers find it more convenient to manage their code using \ind{Monticello} packages. 
